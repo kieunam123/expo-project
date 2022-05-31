@@ -21,7 +21,7 @@ export default function Profile(props) {
   const { name, email, phone, gender, age, regdate, national, city } = user
   return (
     <View>
-      <Header name={'Profile'} />
+      <Header name={'Profile'} rightIconName={'menu'} />
       <View style={styles.container}>
         <Text style={styles.text}>name:{name}</Text>
         <Text style={styles.text}>mail:{email}</Text>
