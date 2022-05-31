@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Chat, FoodList,Profile,Products} from '../screens'
+import { FoodList,Profile,Products,Chat} from '../screens'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/Ionicons';
 import {

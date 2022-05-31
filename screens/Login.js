@@ -1,10 +1,20 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {StyleSheet,Text,View,Image,ImageBackground,TouchableOpacity,TextInput,KeyboardAvoidingView,Keyboard,TouchableHighlight } from 'react-native';
 import {images,icons,FormatFont} from '../constants';
 import {Buttons} from '../components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { isValidEmail, isValidPassword,loginwithOffice365 } from '../ulities/Validation';
-
+import {
+    app,
+    database,
+    onAuthStateChanged,
+    firebaseRef,
+    firebaseSet,
+    get,
+    child,
+    signInWithEmailAndPassword,
+    auth,
+} from '../firebase/firebase'
 export default function Login(props){
     //navigate function
     const{navigation,route}=props
@@ -17,6 +27,7 @@ export default function Login(props){
     const isValidationOK = () => Email.length > 0 && Password.length > 0
     && isValidEmail(Email) == true
     && isValidPassword(Password) == true
+
     return (
         <View style={styles.container}>
             <ImageBackground style={styles.container} source={images.background}>
@@ -53,7 +64,23 @@ export default function Login(props){
                         <Text style={styles.error}>{errorPassword}</Text>
                         <TouchableOpacity
                             disabled={isValidationOK() == false}
-                            onPress={() => { navigate('tab') }}
+                            onPress={() => { 
+                                signInWithEmailAndPassword(auth,Email,Password)
+                                .then((userCredential)=>{
+                                    const user = userCredential.user
+                                    // firebaseSet(firebaseRef(
+                                    //     database,
+                                    //     `users/${user.uid}`
+                                    // ),{
+                                    //     email:user.email,
+                                    //     emailVerified:user.emailVerified,
+                                    //     accessToken:user.accessToken
+                                    // })
+                                    navigate('tab')
+                                }).catch((error)=>{
+                                    alert(`Tên đăng nhập hoặc mật khẩu của bạn bị sai. Vui lòng thử lại`)
+                                })
+                             }}
                             style={styles.button}>
                             <Text style={styles.buttonText}>log in</Text>
                         </TouchableOpacity>

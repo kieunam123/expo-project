@@ -5,6 +5,8 @@ import FoodItem from "./FoodItem";
 import Profile from "./Profile";
 import Chat from "./Chat";
 import Products from "./Products";
+import Messenger from "./Messenger";
+
 export{
     WelcomeScreen,
     Login,
@@ -13,4 +15,6 @@ export{
     FoodItem,
     Chat,
     Products,
+    Messenger,
+    
 };

@@ -17,7 +17,7 @@ export default function FoodList(props){
             name : 'Bún real',
             img:'https://i.ytimg.com/vi/C1P1Cw9J1-I/maxresdefault.jpg',
             status : 'đang phục vụ',
-            price : 33000,
+            price : 30000,
         },
         {
             name : 'Cơm Sườn',
@@ -27,7 +27,7 @@ export default function FoodList(props){
         },
     ])
     return(
-        <View>
+        <View style={{flex:1}}>
             <Header name={'Menu'} />
             <FlatList
                 data={foods}

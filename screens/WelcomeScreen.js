@@ -4,6 +4,7 @@ import { Buttons } from '../components';
 import {images,icons, FormatFont} from '../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {auth,logged} from '../firebase/firebase'
 
 export default function WelcomeScreen(props){
     const{navigation,route}=props

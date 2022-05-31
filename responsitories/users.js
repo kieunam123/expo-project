@@ -17,7 +17,6 @@ const getUserDetail = async () => {
         user.national = userData1.location.country ?? 'null'
         user.city = userData1.location.city ?? 'null'
         return user
-
     }
     catch (error) {
         throw error

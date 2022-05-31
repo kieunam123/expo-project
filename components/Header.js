@@ -6,6 +6,7 @@ import {
     Text,
     useColorScheme,
     View,
+    TouchableOpacity,
   } from 'react-native';
 import React, {Component} from 'react'
 import { FormatFont } from '../constants';
@@ -20,13 +21,21 @@ export default function Header(props) {
     } = props
     return (
         <SafeAreaView style={styles.container}>
-            <Icon style={styles.iconleft}
-                name={leftIconName}
-                size={35}/>
+            <TouchableOpacity
+                onPress={onPressLeftIcon}>
+                <Icon
+                    style={styles.iconleft}
+                    name={leftIconName}
+                    size={35} />
+            </TouchableOpacity>
             <Text style={styles.name}>{name}</Text>
-            <Icon style={styles.iconright}
-                name={rightIconName}
-                size={30}/>
+            <TouchableOpacity
+                onPress={onPressRightIcon}>
+                <Icon
+                    style={styles.iconright}
+                    name={rightIconName}
+                    size={30} />
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
