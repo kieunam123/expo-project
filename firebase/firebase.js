@@ -5,6 +5,7 @@ import {
     set as firebaseSet,
     child,
     get,
+    onValue,
 } from "firebase/database"
 
 import {
@@ -40,4 +41,5 @@ export{
     get,
     child,
     signInWithEmailAndPassword,
+    onValue,
 }

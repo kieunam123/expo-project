@@ -46,16 +46,18 @@ const styles = StyleSheet.create({
     },
 
     avatar:{
-        marginVertical:10
+        marginVertical:10,
+        
     },
     inboxNumber:{
         backgroundColor:'red',
         position:'absolute',
         right:10,
-        fontSize:FormatFont.normal,
+        fontSize:12,
         color:'white',
-        borderRadius:5,
-        paddingHorizontal: 3
+        borderRadius:9,
+        paddingHorizontal:4,
+        overflow:'hidden'
     },
     line:{
         backgroundColor: 'rgba(193, 190, 190, 0.11)', height: 1, flex: 1, position: 'absolute',paddingHorizontal:500
