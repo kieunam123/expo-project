@@ -92,7 +92,7 @@ export default function FoodList(props){
                             <TextInput style={styles.input} keyboardType='numeric' />
                         </View>
                         <View style={styles.row}>
-                            <Text style={{marginRight:58}}>Image</Text>
+                            <Text style={{marginRight:23}}>Image URL</Text>
                             <TextInput style={styles.input} />
                         </View>
                         <View style={styles.row}>
@@ -103,6 +103,7 @@ export default function FoodList(props){
                                 items={dropdownItems}
                                 value={dropdownValue}
                                 containerStyle={styles.dropdownContainer}
+                                labelStyle={styles.dropdownContainer}
                                 setOpen={setDropdownOpen}
                                 setValue={setDropdownValue}
                                 setItems={setdropdownItems} />
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
         backgroundColor:'pink',
         borderRadius:Ios()?30:0,
         shadowRadius:10,
-        height: 460,
+        height: 470,
     },
     text:{
         color:'white'
@@ -170,16 +171,20 @@ const styles = StyleSheet.create({
         marginHorizontal:10
     },
     dropdown:{
-        width:260.5,
-        height:30,
+        width:220.5,
+        // height:20,
         borderRadius:10,
-        alignItems:'center',
-        justifyContent:'center',
+        marginLeft:15,
+        // alignItems:'center',
+        // justifyContent:'center',
         paddingHorizontal:15,
+        // marginTop:10
     },
     dropdownContainer:{
-        marginLeft:20,
-        flex:1
+        marginRight:25,
+        marginLeft:24,
+        width:235.5,      
+        // flex:1
     },
     row:{
         flexDirection: 'row' ,
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
         backgroundColor:'pink',
         // borderColor: 'grey',
         // borderWidth: 0.3,
-        marginTop: 124,
+        marginTop: 104,
         alignSelf: 'center',
         height: 60,
         width: '106%',
