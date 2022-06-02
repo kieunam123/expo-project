@@ -171,10 +171,10 @@ const styles = StyleSheet.create({
         marginHorizontal:10
     },
     dropdown:{
-        width:220.5,
+        width:235.5,
         // height:20,
         borderRadius:10,
-        marginLeft:15,
+        // marginLeft:15,
         // alignItems:'center',
         // justifyContent:'center',
         paddingHorizontal:15,
