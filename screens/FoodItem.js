@@ -19,8 +19,8 @@ export default function FoodItem(props){
 }
 
 function _getColorFromStatus(status){
-    return status.toLowerCase().trim() == 'đang phục vụ' ? colors.success : 
-    (status.toLowerCase().trim() == 'hết món' ? colors.warning : colors.success) 
+    return status == 'đang phục vụ' ? colors.success : 
+    (status == 'hết món' ? colors.warning : colors.success) 
 }
 
 const styles = StyleSheet.create({

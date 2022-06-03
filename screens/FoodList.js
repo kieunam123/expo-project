@@ -1,14 +1,14 @@
-import React,{useState,useEffect} from 'react';
-import {StyleSheet,FlatList,ScrollView,onChangeText,Text,View,Image,ImageBackground,TouchableOpacity,TextInput,KeyboardAvoidingView,Keyboard} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableWithoutFeedback,StyleSheet, FlatList, ScrollView, onChangeText, Text, View, Image, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components';
 import FoodItem from './FoodItem';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import  Device from '../ulities/Device'
+import Device from '../ulities/Device'
 import Modal from 'react-native-modal'
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import {
+    firebase,
     app,
     database,
     onAuthStateChanged,
@@ -19,19 +19,18 @@ import {
     signInWithEmailAndPassword,
     auth,
     onValue,
-} from '../firebase/firebase'
+} from '../firebase/firebase';
 import { Ios, screenWidth } from '../ulities/Device';
 
-export default function FoodList(props){
-
+export default function FoodList(props) {
+    const dbref = firebaseRef(database)
     const [foods, setFoods] = useState([
 
     ])
+    
 
-    const dbref = firebaseRef(database)
-    useEffect(() => {
-        // onValue(firebaseRef(dbref, 'users'), (snapshot) => {
-            get(child(dbref,'foods')).then((snapshot)=>{
+    const get_data = () => {
+        get(child(dbref, 'foods')).then((snapshot) => {
             if (snapshot.exists()) {
                 let value = snapshot.val()
                 setFoods(Object.values(value).map(eachObject => {
@@ -46,18 +45,56 @@ export default function FoodList(props){
                 console.log('No data available')
             }
         })
-    },[])
+    }
 
-    const[modalOpen, setModalOpen] = useState(false)
-    const[dropdown,setDropdownOpen] = useState(false)
+
+    
+    useEffect(() => {
+        get(child(dbref, 'foods')).then((snapshot) => {
+            if (snapshot.exists()) {
+                let value = snapshot.val()
+                setFoods(Object.values(value).map(eachObject => {
+                    return {
+                        img: eachObject.img,
+                        name: eachObject.name,
+                        price: eachObject.price,
+                        status: eachObject.status,
+                    }
+                }))
+            } else {
+                console.log('No data available')
+            }
+        })
+    }, [])
+
+    const [modalOpen, setModalOpen] = useState(false)
+    const [dropdown, setDropdownOpen] = useState(false)
     const [dropdownValue, setDropdownValue] = useState([]);
     const [dropdownItems, setdropdownItems] = useState([
-        {label: 'đang phục vụ', value: 'đang phục vụ'},
-        {label: 'hết món', value: 'hết món'}
-      ]);
-    
-    return(
-        <View style={{flex:1}}>
+        { label: 'đang phục vụ', value: 'đang phục vụ' },
+        { label: 'hết món', value: 'hết món' }
+    ]);
+    const [id,setId] = useState();
+    const [name,setName] = useState();
+    const [price,setPrice] = useState();
+    const [img,setImg] = useState('https://image.winudf.com/v2/image1/Y29tLmJlc3Rfc2VsbGVyX2ljb25fMTYyNTQ0NDQ5OF8wMzQ/icon.png?w=100&fakeurl=1&type=.webp');
+    const [status,setStatus] = useState();
+
+    function Push(id,name,price,img,dropdownValue){
+        firebaseSet(firebaseRef(database,`foods/${id}`),{
+            //firebaseSet(firebaseRef(
+                                    //     database,
+            // app.database().firebaseRef("foods/").firebaseSet({
+            id:id,
+            name :name ,
+            price : price,
+            img : img,
+            status:dropdownValue
+        });
+    }
+
+    return (
+        <View style={{ flex: 1 }}>
             <Header name={'Menu'} />
             <FlatList
                 data={foods}
@@ -69,31 +106,34 @@ export default function FoodList(props){
                 keyExtractor={eachFood => eachFood.name}
             />
 
-            
             <Modal
                 hasBackdrop={true}
                 position='center'
                 isVisible={modalOpen}
-                onBackdropPress={() =>setModalOpen(false)}
-                >
-                <View style={styles.container} >
+                onBackdropPress={() => setModalOpen(false)}
+            >
+                <View style={styles.container} onPress={Keyboard.dismiss} accessible={false} >
                     <View style={styles.modalHeader}>
-                        <View/>
+                        <View />
                         <Text style={styles.text}>Thêm sản phẩm</Text>
                         <Icon style={styles.close} name={'close'} size={25} onPress={() => setModalOpen(false)} />
                     </View>
                     <View style={styles.modalBody}>
+                    <View style={styles.row}>
+                            <Text>ID : </Text>
+                            <TextInput style={styles.input2} onChangeText={(text) => {setId(text)}} value={id} />
+                        </View>
                         <View style={styles.row}>
                             <Text>Tên sản phẩm</Text>
-                            <TextInput style={styles.input} />
+                            <TextInput style={styles.input}  onChangeText={(text) => {setName(text)}}  />
                         </View>
                         <View style={styles.row}>
-                            <Text style={{marginRight:77}}>Giá</Text>
-                            <TextInput style={styles.input} keyboardType='numeric' />
+                            <Text style={{ marginRight: 77 }}>Giá</Text>
+                            <TextInput style={styles.input} keyboardType='numeric' onChangeText={(text) => {setPrice(text)}}  />
                         </View>
                         <View style={styles.row}>
-                            <Text style={{marginRight:23}}>Image URL</Text>
-                            <TextInput style={styles.input} />
+                            <Text style={{ marginRight: 23 }}>Image URL</Text>
+                            <TextInput style={styles.input} onChangeText={(text) => {setImg(text)}} placeholder='default' placeholderTextColor={'grey'} />
                         </View>
                         <View style={styles.row}>
                             <Text>Trạng thái</Text>
@@ -108,21 +148,23 @@ export default function FoodList(props){
                                 setValue={setDropdownValue}
                                 setItems={setdropdownItems} />
                         </View>
-                        <TouchableOpacity 
-                        style={styles.button}>
+                        <TouchableOpacity
+                            style={styles.button} onPress={()=>{
+                                Push(id,name,price,img,dropdownValue)
+                                get_data()
+                            }}
+                            >
                             <Text style={styles.buttonText}>THÊM</Text>
                         </TouchableOpacity>
-                        
                     </View>
-                    {/* <View style={{backgroundColor:'pink',flex:0.14,borderRadius:40}}></View> */}
                 </View>
             </Modal>
-          
+
 
             <TouchableOpacity
                 style={{ position: 'absolute', marginTop: Ios() ? 700 : 500, marginStart: 300 }}
-                onPress={() => 
-                   setModalOpen(true)
+                onPress={() =>
+                    setModalOpen(true)
                 }>
                 <Icon name={'plus'} size={80} style={{ marginEnd: 20, color: 'grey' }} />
             </TouchableOpacity>
@@ -132,90 +174,88 @@ export default function FoodList(props){
 }
 
 const styles = StyleSheet.create({
-    container:{
-        justifyContent:'center',
-        backgroundColor:'pink',
-        borderRadius:Ios()?30:0,
-        shadowRadius:10,
-        height: 470,
+    container: {
+        justifyContent: 'center',
+        backgroundColor: 'pink',
+        borderRadius: Ios() ? 30 : 0,
+        shadowRadius: 10,
+        height: 530,
     },
-    text:{
-        color:'white'
+    text: {
+        color: 'white'
     },
 
-    close:{
-        color:'white',
+    close: {
+        color: 'white',
     },
-    modalHeader:{
-         flexDirection: 'row' ,
-         justifyContent:'space-between',
-         margin:10,
-         alignItems:'center',
-         
+    modalHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10,
+        alignItems: 'center',
+
     },
-    modalBody:{
-        backgroundColor:'white',
-        flex:1,
-        padding:10,
-        borderBottomStartRadius:Ios()?30:0,
-        borderBottomEndRadius:Ios()?30:0,
+    modalBody: {
+        backgroundColor: 'white',
+        flex: 1,
+        padding: 10,
+        borderBottomStartRadius: Ios() ? 30 : 0,
+        borderBottomEndRadius: Ios() ? 30 : 0,
     },
 
     input: {
         borderWidth: 1,
         height: 40,
-        width:220,
+        width: 220,
         borderColor: 'black',
         borderRadius: 10,
         borderStyle: 'solid',
-        marginHorizontal:10
+        marginHorizontal: 10,
+        
     },
-    dropdown:{
-        width:235.5,
-        // height:20,
-        borderRadius:10,
-        // marginLeft:15,
-        // alignItems:'center',
-        // justifyContent:'center',
-        paddingHorizontal:15,
-        // marginTop:10
+    input2: {
+        borderWidth: 1,
+        height: 40,
+        width:50,
+        borderColor: 'black',
+        borderRadius: 5,
+        borderStyle: 'solid',
+        marginHorizontal: 80,
+        paddingHorizontal:20
     },
-    dropdownContainer:{
-        marginRight:25,
-        marginLeft:24,
-        width:235.5,      
-        // flex:1
+    dropdown: {
+        width: 235.5,
+        borderRadius: 10,
+        paddingHorizontal: 15,
     },
-    row:{
-        flexDirection: 'row' ,
-        alignItems:'center',
-        paddingVertical:10
+    dropdownContainer: {
+        marginRight: 25,
+        marginLeft: 24,
+        width: 235.5,
     },
-    button:{
-        // backgroundColor:'white',
-        // borderColor: 'pink',
-        // borderWidth: 3,
-        backgroundColor:'pink',
-        // borderColor: 'grey',
-        // borderWidth: 0.3,
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10
+    },
+    button: {
+        backgroundColor: 'pink',
         marginTop: 104,
         alignSelf: 'center',
         height: 60,
         width: '106%',
-        borderBottomLeftRadius:30,
-        borderBottomRightRadius:30,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
         borderStyle: 'solid',
         padding: 10,
-        // marginBottom:20
     },
-    buttonText:{
+    buttonText: {
         alignSelf: 'center',
         color: 'white',
-        // color:'pink',
-        textTransform:'uppercase',
-        paddingTop:6,
-        fontWeight:'bold',
-        fontSize:20
+        textTransform: 'uppercase',
+        paddingTop: 6,
+        fontWeight: 'bold',
+        fontSize: 20
     },
 
 })
