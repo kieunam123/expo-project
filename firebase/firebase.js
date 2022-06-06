@@ -7,6 +7,8 @@ import {
     child,
     get,
     onValue,
+    remove,
+    push,
 } from "firebase/database"
 
 import {
@@ -44,4 +46,6 @@ export{
     child,
     signInWithEmailAndPassword,
     onValue,
+    remove,
+    push,
 }

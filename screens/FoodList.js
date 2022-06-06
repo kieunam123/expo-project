@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableWithoutFeedback,StyleSheet, FlatList, ScrollView, onChangeText, Text, View, Image, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Alert, TouchableWithoutFeedback, StyleSheet, FlatList, ScrollView, onChangeText, Text, View, Image, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Header } from '../components';
+import { Header} from '../components';
 import FoodItem from './FoodItem';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Device from '../ulities/Device'
 import Modal from 'react-native-modal'
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Ios, screenWidth } from '../ulities/Device';
 import {
+    remove,
+    push,
     firebase,
     app,
     database,
@@ -20,37 +23,14 @@ import {
     auth,
     onValue,
 } from '../firebase/firebase';
-import { Ios, screenWidth } from '../ulities/Device';
 
 export default function FoodList(props) {
     const dbref = firebaseRef(database)
-    const [foods, setFoods] = useState([
+    const [foods, setFoods] = useState([])
 
-    ])
-    
-
-    const get_data = () => {
-        get(child(dbref, 'foods')).then((snapshot) => {
-            if (snapshot.exists()) {
-                let value = snapshot.val()
-                setFoods(Object.values(value).map(eachObject => {
-                    return {
-                        img: eachObject.img,
-                        name: eachObject.name,
-                        price: eachObject.price,
-                        status: eachObject.status,
-                    }
-                }))
-            } else {
-                console.log('No data available')
-            }
-        })
-    }
-
-
-    
+//auto get all data from database
     useEffect(() => {
-        get(child(dbref, 'foods')).then((snapshot) => {
+        get(child(dbref, `foods`)).then((snapshot) => {
             if (snapshot.exists()) {
                 let value = snapshot.val()
                 setFoods(Object.values(value).map(eachObject => {
@@ -67,32 +47,91 @@ export default function FoodList(props) {
         })
     }, [])
 
-    const [modalOpen, setModalOpen] = useState(false)
+
+//get each data after modified
+    const get_data = () => {
+        get(child(dbref, 'foods')).then((snapshot) => {
+            let array=[]
+            if (snapshot.exists()) {
+                let value = snapshot.val()
+                setFoods(Object.values(value).map(eachObject => {
+                    return {
+                        img: eachObject.img,
+                        name: eachObject.name,
+                        price: eachObject.price,
+                        status: eachObject.status,
+                    }
+                }))
+            } else {
+                console.log('No data available')
+            }
+        })
+    }
+
+    const [modalOpen, setModalOpen] = useState()
+    const [modalEditOpen,setModalEditOpen] = useState(false)
     const [dropdown, setDropdownOpen] = useState(false)
     const [dropdownValue, setDropdownValue] = useState([]);
     const [dropdownItems, setdropdownItems] = useState([
         { label: 'đang phục vụ', value: 'đang phục vụ' },
         { label: 'hết món', value: 'hết món' }
     ]);
-    const [id,setId] = useState();
-    const [name,setName] = useState();
-    const [price,setPrice] = useState();
-    const [img,setImg] = useState('https://image.winudf.com/v2/image1/Y29tLmJlc3Rfc2VsbGVyX2ljb25fMTYyNTQ0NDQ5OF8wMzQ/icon.png?w=100&fakeurl=1&type=.webp');
-    const [status,setStatus] = useState();
+    const [id, setId] = useState();
+    const [name, setName] = useState();
+    const [price, setPrice] = useState();
+    const [img, setImg] = useState('https://image.winudf.com/v2/image1/Y29tLmJlc3Rfc2VsbGVyX2ljb25fMTYyNTQ0NDQ5OF8wMzQ/icon.png?w=100&fakeurl=1&type=.webp');
+    const [status, setStatus] = useState();
 
-    function Push(id,name,price,img,dropdownValue){
-        firebaseSet(firebaseRef(database,`foods/${id}`),{
-            //firebaseSet(firebaseRef(
-                                    //     database,
-            // app.database().firebaseRef("foods/").firebaseSet({
-            id:id,
-            name :name ,
-            price : price,
-            img : img,
-            status:dropdownValue
+    //add product
+    function Push(name, price, img, dropdownValue) {
+       firebaseSet(firebaseRef(database, `foods/${name}`), {
+            name: name,
+            price: price,
+            img: img,
+            status: dropdownValue
         });
     }
 
+    //modify product
+    function Edit(name,price,img,dropdownValue){
+        firebaseSet(firebaseRef(database,`foods/${name}`),{
+            name:name,
+            price:price,
+            img:img,
+            status:dropdownValue,
+        });
+    }
+    //delete product
+    function Delete(id){
+        remove(firebaseRef(database,`foods/${id}`))
+        
+    }
+
+    const createThreeButtonAlert = (item) =>
+    Alert.alert(
+      `${item.name}`,
+      " ",
+      [
+
+        {
+          text: "Xoá",
+          onPress: () => {
+              Delete(item.name)
+              get_data()
+            }
+        },
+       
+        { text: "Sửa",
+        onPress: () => {setModalEditOpen(true)} },
+       
+        {
+            text: "Cancel",
+            onPress: () => {},
+            style: "cancel"
+          },
+      ]
+    );
+    
     return (
         <View style={{ flex: 1 }}>
             <Header name={'Menu'} />
@@ -100,7 +139,8 @@ export default function FoodList(props) {
                 data={foods}
                 renderItem={({ item }) => <FoodItem
                     onPress={() => {
-                        alert(`You have presseed ${item.name}`)
+                        createThreeButtonAlert(item)
+                        // setModalEditOpen(true)
                     }}
                     food={item} key={item.name} />}
                 keyExtractor={eachFood => eachFood.name}
@@ -112,29 +152,33 @@ export default function FoodList(props) {
                 isVisible={modalOpen}
                 onBackdropPress={() => setModalOpen(false)}
             >
-                <View style={styles.container} onPress={Keyboard.dismiss} accessible={false} >
+                <View style={styles.container} keyboardShouldPersistTaps='handled' >
                     <View style={styles.modalHeader}>
                         <View />
                         <Text style={styles.text}>Thêm sản phẩm</Text>
                         <Icon style={styles.close} name={'close'} size={25} onPress={() => setModalOpen(false)} />
                     </View>
                     <View style={styles.modalBody}>
-                    <View style={styles.row}>
-                            <Text>ID : </Text>
-                            <TextInput style={styles.input2} onChangeText={(text) => {setId(text)}} value={id} />
-                        </View>
-                        <View style={styles.row}>
+                        {/* <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
+                            <Text>ID    </Text>
+                            <TextInput style={styles.input2} onChangeText={(text) => { setId(text) }}  />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView> */}
+                        <ScrollView contentContainerStyle={styles.row}>
                             <Text>Tên sản phẩm</Text>
-                            <TextInput style={styles.input}  onChangeText={(text) => {setName(text)}}  />
-                        </View>
-                        <View style={styles.row}>
+                            <TextInput style={styles.input} onChangeText={(text) => { setName(text) }} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
+                        <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
                             <Text style={{ marginRight: 77 }}>Giá</Text>
-                            <TextInput style={styles.input} keyboardType='numeric' onChangeText={(text) => {setPrice(text)}}  />
-                        </View>
-                        <View style={styles.row}>
+                            <TextInput style={styles.input} keyboardType='numeric' onChangeText={(text) => { setPrice(text) }} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
+                        <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
                             <Text style={{ marginRight: 23 }}>Image URL</Text>
-                            <TextInput style={styles.input} onChangeText={(text) => {setImg(text)}} placeholder='default' placeholderTextColor={'grey'} />
-                        </View>
+                            <TextInput style={styles.input} onChangeText={(text) => { setImg(text) }} placeholder='default' placeholderTextColor={'grey'} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
                         <View style={styles.row}>
                             <Text>Trạng thái</Text>
                             <DropDownPicker
@@ -149,17 +193,77 @@ export default function FoodList(props) {
                                 setItems={setdropdownItems} />
                         </View>
                         <TouchableOpacity
-                            style={styles.button} onPress={()=>{
-                                Push(id,name,price,img,dropdownValue)
+                            style={styles.button} onPress={() => {
+                                Push(name, price, img, dropdownValue)
                                 get_data()
+                                setModalOpen(false)
                             }}
-                            >
+                        >
                             <Text style={styles.buttonText}>THÊM</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
 
+            {/* edit product modal */}
+            <Modal
+                hasBackdrop={true}
+                position='center'
+                isVisible={modalEditOpen}
+                onBackdropPress={() => setModalEditOpen(false)}
+            >
+                <View style={styles.container} keyboardShouldPersistTaps='handled' >
+                    <View style={styles.modalHeader}>
+                        <View />
+                        <Text style={styles.text}>SỬA SẢN PHẨM</Text>
+                        <Icon style={styles.close} name={'close'} size={25} onPress={() => setModalEditOpen(false)} />
+                    </View>
+                    <View style={styles.modalBody}>
+                        {/* <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
+                     <Text>ID    </Text>
+                     <TextInput style={styles.input2} onChangeText={(text) => { setId(text) }} value={id} />
+                     <Icon name="check" color="green" size={30} />
+                 </ScrollView> */}
+                        <ScrollView contentContainerStyle={styles.row}>
+                            <Text>Tên sản phẩm</Text>
+                            <TextInput style={styles.input} onChangeText={(text) => { setName(text) }} values={foods.name} placeholder={name} placeholderTextColor={'grey'} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
+                        <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
+                            <Text style={{ marginRight: 77 }}>Giá</Text>
+                            <TextInput style={styles.input} keyboardType='numeric' onChangeText={(text) => { setPrice(text) }} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
+                        <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
+                            <Text style={{ marginRight: 23 }}>Image URL</Text>
+                            <TextInput style={styles.input} onChangeText={(text) => { setImg(text) }} placeholder='default' placeholderTextColor={'grey'} />
+                            <Icon name="check" color="green" size={30} />
+                        </ScrollView>
+                        <View style={styles.row}>
+                            <Text>Trạng thái</Text>
+                            <DropDownPicker
+                                style={styles.dropdown}
+                                open={dropdown}
+                                items={dropdownItems}
+                                value={dropdownValue}
+                                containerStyle={styles.dropdownContainer}
+                                labelStyle={styles.dropdownContainer}
+                                setOpen={setDropdownOpen}
+                                setValue={setDropdownValue}
+                                setItems={setdropdownItems} />
+                        </View>
+                        <TouchableOpacity
+                            style={styles.button} onPress={() => {
+                                Edit(name,price, img, dropdownValue)
+                                get_data()
+                                setModalEditOpen(false)
+                            }}
+                        >
+                            <Text style={styles.buttonText}>SỬA</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
             <TouchableOpacity
                 style={{ position: 'absolute', marginTop: Ios() ? 700 : 500, marginStart: 300 }}
@@ -179,7 +283,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'pink',
         borderRadius: Ios() ? 30 : 0,
         shadowRadius: 10,
-        height: 530,
+        height: 500,
     },
     text: {
         color: 'white'
@@ -206,22 +310,25 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         height: 40,
-        width: 220,
+        width: 190,
         borderColor: 'black',
         borderRadius: 10,
         borderStyle: 'solid',
         marginHorizontal: 10,
-        
+        paddingHorizontal: 15,
+
+
     },
     input2: {
         borderWidth: 1,
         height: 40,
-        width:50,
+        width: 50,
         borderColor: 'black',
         borderRadius: 5,
         borderStyle: 'solid',
-        marginHorizontal: 80,
-        paddingHorizontal:20
+        marginLeft: 80,
+        marginRight: 20,
+        paddingHorizontal: 10
     },
     dropdown: {
         width: 235.5,
@@ -243,6 +350,7 @@ const styles = StyleSheet.create({
         marginTop: 104,
         alignSelf: 'center',
         height: 60,
+        top:10,
         width: '106%',
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,

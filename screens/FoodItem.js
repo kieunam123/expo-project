@@ -3,7 +3,7 @@ import {StyleSheet,onChangeText,Text,View,Image,ImageBackground,TouchableOpacity
 import {images,icons,FormatFont,colors} from '../constants';
 
 export default function FoodItem(props){
-    let {name,img,status,price}=props.food
+    let {id,name,img,status,price}=props.food
     const {onPress}=props
     return(
         <TouchableOpacity onPress={onPress}
@@ -11,6 +11,7 @@ export default function FoodItem(props){
             <Image source={{ uri: img }} style={styles.img} />
             <View style={styles.content}>
                 <Text style={styles.name} >{name}</Text>
+                {/* <Text>{id}</Text> */}
                 <Text style={{ flex: 1, color: _getColorFromStatus(status), textTransform: 'capitalize' }}>{status}</Text>
                 <Text>{price}VNĐ</Text>
             </View>
