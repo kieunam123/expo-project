@@ -8,6 +8,7 @@ import Device from '../ulities/Device'
 import Modal from 'react-native-modal'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Ios, screenWidth } from '../ulities/Device';
+
 import {
     remove,
     push,
@@ -102,8 +103,8 @@ export default function FoodList(props) {
         });
     }
     //delete product
-    function Delete(id){
-        remove(firebaseRef(database,`foods/${id}`))
+    function Delete(name){
+        remove(firebaseRef(database,`foods/${name}`))
         
     }
 
@@ -132,19 +133,52 @@ export default function FoodList(props) {
       ]
     );
     
+
+    
     return (
         <View style={{ flex: 1 }}>
             <Header name={'Menu'} />
-            <FlatList
-                data={foods}
-                renderItem={({ item }) => <FoodItem
-                    onPress={() => {
-                        createThreeButtonAlert(item)
-                        // setModalEditOpen(true)
-                    }}
-                    food={item} key={item.name} />}
-                keyExtractor={eachFood => eachFood.name}
-            />
+            
+                <FlatList
+                    data={foods}
+                    renderItem={({ item }) => <FoodItem
+                        swipeOutBtn={ [
+                            {
+                                text:'Sửa',
+                                type:'primary',
+                                onPress:()=>{
+                                    setModalEditOpen(true)
+                                    
+                                }
+                            },
+                            {
+                                text:'Xoá',
+                                type:'delete',
+                                onPress:()=>{
+                                    Alert.alert(
+                                        `Xoá ${item.name}`,
+                                        'Bạn chắc chắn muốn xoá?',
+                                        [
+                                            {text:'No',onPress:()=>{},style:'cancel'},
+                                            {text:'Yes',onPress:()=>{
+                                                Delete(item.name)
+                                                get_data()
+                                            }},
+                                        ],
+                        
+                                        {cancelable:true}
+                                    );
+                                }
+                            },
+                        ]
+                    }
+                        onPress={() => {
+                            createThreeButtonAlert(item)
+                            // setModalEditOpen(true)
+                        }}
+                        food={item} key={item.name} />}
+                    keyExtractor={eachFood => eachFood.name}
+                />
 
             <Modal
                 hasBackdrop={true}
@@ -176,7 +210,7 @@ export default function FoodList(props) {
                         </ScrollView>
                         <ScrollView contentContainerStyle={styles.row} keyboardShouldPersistTaps='handled'>
                             <Text style={{ marginRight: 23 }}>Image URL</Text>
-                            <TextInput style={styles.input} onChangeText={(text) => { setImg(text) }} placeholder='default' placeholderTextColor={'grey'} />
+                            <TextInput style={styles.input} onChangeText={(text) => { setImg(text) }} placeholder='default' placeholderTextColor={'grey'}/>
                             <Icon name="check" color="green" size={30} />
                         </ScrollView>
                         <View style={styles.row}>
@@ -225,7 +259,7 @@ export default function FoodList(props) {
                      <Icon name="check" color="green" size={30} />
                  </ScrollView> */}
                         <ScrollView contentContainerStyle={styles.row}>
-                            <Text>Tên sản phẩm</Text>
+                            <Text>Tên sp cần sửa</Text>
                             <TextInput style={styles.input} onChangeText={(text) => { setName(text) }} values={foods.name} placeholder={name} placeholderTextColor={'grey'} />
                             <Icon name="check" color="green" size={30} />
                         </ScrollView>
