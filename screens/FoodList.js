@@ -173,8 +173,21 @@ export default function FoodList(props) {
                 {
                     text: "Xoá",
                     onPress: () => {
-                        Delete(item.name)
-                        get_data()
+                        Alert.alert(
+                            `Xoá ${item.name}`,
+                            'Bạn chắc chắn muốn xoá?',
+                            [
+                                { text: 'No', style: 'cancel' },
+                                {
+                                    text: 'Yes', onPress: () => {
+                                        Delete(item.name)
+                                        get_data()
+                                    }
+                                },
+                            ],
+
+                            { cancelable: true }
+                        )
                     }
                 },
 
@@ -200,37 +213,6 @@ export default function FoodList(props) {
             <FlatList
                 data={foods}
                 renderItem={({ item }) => <FoodItem
-                    swipeOutBtn={[
-                        {
-                            text: 'Sửa',
-                            type: 'primary',
-                            onPress: () => {
-                                setModalEditOpen(true);
-                            }
-                        },
-                        {
-                            text: 'Xoá',
-                            type: 'delete',
-                            onPress: () => {
-                                Alert.alert(
-                                    `Xoá ${item.name}`,
-                                    'Bạn chắc chắn muốn xoá?',
-                                    [
-                                        { text: 'No', onPress: () => { }, style: 'cancel' },
-                                        {
-                                            text: 'Yes', onPress: () => {
-                                                Delete(item.name)
-                                                get_data()
-                                            }
-                                        },
-                                    ],
-
-                                    { cancelable: true }
-                                );
-                            }
-                        },
-                    ]
-                    }
                     onPress={() => {
                         createThreeButtonAlert(item)
                         // setModalEditOpen(true)
