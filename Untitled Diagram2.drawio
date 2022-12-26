@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T10:16:06.311Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="7ee5ayD8qOi2FlCDJQ-h" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-12-26T10:17:01.473Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="I1QlkgBidzPukToYkLmt" version="20.7.4" type="github">
   <diagram id="prtHgNgQTEPvFCAcTncT" name="Page-1">
     <mxGraphModel dx="378" dy="189" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -84,7 +84,7 @@
         <mxCell id="y52odibCs_0-G0sl_E-t-67" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;" edge="1" parent="dNxyNK7c78bLwvsdeMH5-22" source="y52odibCs_0-G0sl_E-t-41" target="y52odibCs_0-G0sl_E-t-45">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="y52odibCs_0-G0sl_E-t-41" value="Validation process" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=#000000;align=center;labelBorderColor=none;" vertex="1" parent="dNxyNK7c78bLwvsdeMH5-22">
+        <mxCell id="y52odibCs_0-G0sl_E-t-41" value="Validation process" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=#000000;align=center;labelBorderColor=none;" vertex="1" parent="dNxyNK7c78bLwvsdeMH5-22">
           <mxGeometry x="121" y="36.37" width="100" height="47.5" as="geometry" />
         </mxCell>
         <mxCell id="y52odibCs_0-G0sl_E-t-44" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;User&#39;s Check In/Out info&lt;/font&gt;" style="shape=card;whiteSpace=wrap;html=1;size=20;rotation=90;verticalAlign=middle;horizontal=0;align=left;" vertex="1" parent="dNxyNK7c78bLwvsdeMH5-22">
