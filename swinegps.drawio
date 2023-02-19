@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-02-19T14:40:33.372Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50" etag="QmD-FvFgDCl9QZwKzFid" version="20.8.20" type="github">
+<mxfile host="app.diagrams.net" modified="2023-02-19T15:03:49.883Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50" etag="14Td3aibTOLd2llswOxp" version="20.8.20" type="github">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
     <mxGraphModel dx="2664" dy="396" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="2.2" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -111,7 +111,7 @@
         <mxCell id="sVSnX-S11ZfNezMlboSL-31" value="Allowed distance?" style="rhombus;whiteSpace=wrap;html=1;labelBorderColor=none;sketch=0;strokeWidth=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
           <mxGeometry x="930" y="290" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="sVSnX-S11ZfNezMlboSL-45" value="Save Information" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
+        <mxCell id="sVSnX-S11ZfNezMlboSL-45" value="Save Information" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
           <mxGeometry x="1110" y="295" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="sVSnX-S11ZfNezMlboSL-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="3nuBFxr9cyL0pnOWT2aG-8" source="sVSnX-S11ZfNezMlboSL-48" target="sVSnX-S11ZfNezMlboSL-31" edge="1">
@@ -163,7 +163,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="sVSnX-S11ZfNezMlboSL-101" value="check in/out from farm list&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
+        <mxCell id="sVSnX-S11ZfNezMlboSL-101" value="Choose farm from farm list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
           <mxGeometry x="230" y="305" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="sVSnX-S11ZfNezMlboSL-158" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;" parent="3nuBFxr9cyL0pnOWT2aG-8" source="sVSnX-S11ZfNezMlboSL-109" target="sVSnX-S11ZfNezMlboSL-22" edge="1">
@@ -224,9 +224,6 @@
         </mxCell>
         <mxCell id="Pvqd0WklEzp56SBGsrRN-9" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Check Out?&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;labelBorderColor=none;sketch=0;strokeWidth=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="3nuBFxr9cyL0pnOWT2aG-8" vertex="1">
           <mxGeometry x="750" y="225" width="120" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="snKlPP_Cd-e8GY4ZODhW-1" value="&lt;b&gt;M&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF7C17;fillStyle=solid;strokeColor=none;" vertex="1" parent="3nuBFxr9cyL0pnOWT2aG-8">
-          <mxGeometry x="1220" y="365" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="snKlPP_Cd-e8GY4ZODhW-5" value="&lt;b&gt;M&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF7C17;fillStyle=solid;strokeColor=none;" vertex="1" parent="3nuBFxr9cyL0pnOWT2aG-8">
           <mxGeometry x="340" y="375" width="30" height="20" as="geometry" />
