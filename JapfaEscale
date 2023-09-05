@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2023-09-05T10:42:15.822Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57" etag="0B9nQOJipJhiSTHi9r_w" version="21.6.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-09-05T10:44:49.403Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57" etag="UwyOeWDB04T_wTZ_AhG4" version="21.6.9" type="github">
   <diagram name="Page-1" id="c9db0220-8083-56f3-ca83-edcdcd058819">
     <mxGraphModel dx="731" dy="1046" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="826" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" style=";html=1;" />
         <mxCell id="1" style=";html=1;" parent="0" />
         <mxCell id="0OYzJa-ls0BLvLe7QKTj-87" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="1260" y="10" width="1200" height="1710" as="geometry" />
+          <mxGeometry x="1260" y="10" width="1200" height="1743.94" as="geometry" />
         </mxCell>
         <mxCell id="0OYzJa-ls0BLvLe7QKTj-19" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=1;shape=mxgraph.ios7.misc.ipad10inch;strokeColor=#c0c0c0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="0OYzJa-ls0BLvLe7QKTj-87">
           <mxGeometry x="381.76" y="58.81" width="288.24" height="468.42" as="geometry" />
@@ -194,6 +194,12 @@
           <mxGeometry y="1" width="63.96480000000001" height="40" relative="1" as="geometry">
             <mxPoint x="55" y="-60" as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="0OYzJa-ls0BLvLe7QKTj-92" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Cân bán hàng&lt;/b&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;- user cân bán hàng theo quy trình như trước , gồm các chức năng của phần mềm cân bán hàng dành cho Swine" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=1;whiteSpace=wrap;html=1;fontSize=14;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="0OYzJa-ls0BLvLe7QKTj-87">
+          <mxGeometry x="40" y="1590" width="330" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="0OYzJa-ls0BLvLe7QKTj-94" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Cân bán hàng&lt;/b&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;- user cân bán hàng theo quy trình như trước , gồm các chức năng của phần mềm cân bán hàng dành cho Poultry" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=1;whiteSpace=wrap;html=1;fontSize=14;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="0OYzJa-ls0BLvLe7QKTj-87">
+          <mxGeometry x="823.98" y="1590" width="330" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
